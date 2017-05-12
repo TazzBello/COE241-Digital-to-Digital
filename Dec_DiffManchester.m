@@ -1,0 +1,39 @@
+function [out] = Dec_DiffManchester(Signal_input)
+%Dec_DiffManchester: Differential Manchester digital decoding
+%   Takes a sequence string of '-+' and '+-' and produces the corresponding
+%   decoded binary output from the Manchester format.
+%       change in direction = '1'
+%       no change  = '0'
+%
+%   The output will be presented as a sequence of 1's and 0's where:
+%       '0' means binary 0 
+%       '1' means bianry 1
+%
+%   Example:
+%       Dec_Manchester(-+-+-++-+--++--+)  % returns string 10010111
+
+if nargin~=1		% check if the number of input arguments is not exactly 1
+    error('You must provide exactly one input argument');
+end
+
+lastLevel = '+-';
+str =blanks(length(Signal_input)/2);
+j =1;
+
+for i = 1:2:length(Signal_input)
+  if (strcmp(Signal_input(i:i+1),lastLevel) ==1)
+      str(j) ='0';
+      disp(str(j))
+      j = j+1;
+      lastLevel =Signal_input(i:i+1);
+      
+  else
+       str(j) ='1';
+       disp(str(j))
+       j=j+1;
+       lastLevel =Signal_input(i:i+1);
+  end
+end
+
+out = str;
+
